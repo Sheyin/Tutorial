@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+      "later0": "tutorialmod:items/tutorial_item"
+  }
+}

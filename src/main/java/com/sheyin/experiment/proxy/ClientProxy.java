@@ -1,6 +1,7 @@
 package com.sheyin.experiment.proxy;
 
 import com.sheyin.experiment.TutorialMod;
+import com.sheyin.experiment.item.ModItems;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -24,7 +25,7 @@ public class ClientProxy extends CommonProxy    {
 
     @Override
     public void init(FMLInitializationEvent event) {
-
+        ModItems.registerRenders();
     }
 
     @Override

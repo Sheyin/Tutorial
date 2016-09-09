@@ -2,8 +2,11 @@
  * Created by Sheyin on 9/8/2016.
  */
 
+// may not be necessary - I think this is a template for what becomes TutorialMod
+
 package com.sheyin.experiment;
 //import com.sheyin.experiment.item.ModItems;
+import com.sheyin.experiment.item.ModItems;
 import com.sheyin.experiment.proxy.CommonProxy;
 import com.sheyin.experiment.tab.CreativeTabTutorial;
 import net.minecraft.creativetab.CreativeTabs;
@@ -17,7 +20,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class TutorialMod {
     //modID should be specific, all lower case, no spaces
     public static final String modID = "tutorial-shey";
-    public static final String name = "Tutorial mod....?";
+    public static final String name = "Shey's Tutorial Mod";
     public static final String version = "1.0.0";
 
     // telling forge that these are proxies
@@ -38,6 +41,7 @@ public class TutorialMod {
     public void preInit(FMLPreInitializationEvent event) {
         // getNextID() autogenerates an ID number to prevent conflicts
         tabTutorial = new CreativeTabTutorial(CreativeTabs.getNextID(), "tab_tutorial");
+        ModItems.preInit();
         proxy.preInit(event);
         //ModItems.init();
     }
