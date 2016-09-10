@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 // This will hold all the code common to any item in general - would move out stuff from TutorialMod
@@ -23,7 +24,15 @@ public class ModItems{
     public static void preInit() {
         // if want to include on a vanilla tab - in the parenthesis after .setCreativeTab,
         // hit tab, else specify
-        tutorialItem = new ItemTutorialItem("tutorial_item");
+
+        // this is going to be where you specify the properties of the new item
+        // enumhelper.addtoolmaterial - for adding a new material, otherwise can simply use ItemTutorialItem(ToolMaterial.IRON), etc
+        tutorialItem = new ItemTutorialItem(EnumHelper.addToolMaterial("TUTORIAL", 3, 20, 8.0F, 10.2F, 30), "tutorial_item");
+
+
+        // if creating own material, setting durability to -1 makes it unbreakable, but can no longer be enchanted.
+        // the max uses MUST be over 0 in order to be enchantable, unless you override block breaking methods etc.
+        // damageVsEntity - keep in mind all swords have a base 4 dmg, the value is what is added on to it.
 
         //tutorialItem = new Item().setUnlocalizedName("tutorial_item").setCreativeTab(TutorialMod.tabTutorial);
         // just specifying new Item() doesn't do much other than specify a name and a tab

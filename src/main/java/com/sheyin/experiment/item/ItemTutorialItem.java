@@ -1,6 +1,10 @@
 package com.sheyin.experiment.item;
 
 import com.sheyin.experiment.TutorialMod;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
@@ -19,11 +23,12 @@ import java.util.List;
 
 
 // originally this was extending an Item, changed in ep. 3 @ 38:15
+// can extend other items instead - note that a "shovel" is actually a "spade"
 public class ItemTutorialItem extends ItemSword {
     // nothing is really required in here, but can change code in TutorialMod to call this instead and specify the item in
     // this acts as a helper function to tidy up code / abstract ion
 
-    // changed when turning this into a sword along with super(material) added
+    // **changed when turning this into a sword along with super(material) added
     //public ItemTutorialItem(String name) {
 
     public ItemTutorialItem(ToolMaterial material, String name) {
@@ -38,7 +43,6 @@ public class ItemTutorialItem extends ItemSword {
     // can also ctrl + click the "Item" class to see all the methods and descriptions
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-
         // this is a check to see if it is a client calling this or server
         // if you don't, both client + server call it and repeat the output
         // this should only affect the server right now
@@ -46,7 +50,6 @@ public class ItemTutorialItem extends ItemSword {
             // can rename playerIn to just player out of convenience here - these are local variables
             playerIn.addChatComponentMessage(new TextComponentString("Right clicked item!"));   // could also do system.out to console or FML blogging, which no one uses?
         }
-
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
     }
 
@@ -64,11 +67,36 @@ public class ItemTutorialItem extends ItemSword {
             // SUCCESS = main hand only, not offhand at all, FAIL = probably doesn't do anything
         }
 
+        // if it is used on plain dirt, spawn a chicken?! run on server only
+        if(!worldIn.isRemote) {
+            if ((worldIn.getBlockState(pos).getBlock() == Blocks.DIRT) || (worldIn.getBlockState(pos).getBlock() == Blocks.OBSIDIAN)) {
+                EntityChicken chicken = new EntityChicken(worldIn);
+                chicken.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
+                // on player's head instead
+                //chicken.setPosition(playerIn.posX, playerIn.posY + 1, playerIn.posZ);
+                worldIn.spawnEntityInWorld(chicken);
+                playerIn.addChatComponentMessage(new TextComponentString("No grass? Here, have a chicken."));
+                return EnumActionResult.SUCCESS;        // item successfully used
+            }
+        }
+
         // itemStack = the stack the player is holding of this item
         // player = you
         // position in the world, main/offhand, direction player is facing, coordinates of the place it was used on
         // can specify ex. this action only when clicking on the top of the block (would need to check the coordinates)
         return EnumActionResult.PASS;               // if the first condition is false (not a grass block) - use offhand instead
+    }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
+        // normally this returns a damaged item, but if we want it unbreakable + enchantable - just return true instead of using super
+        return true;
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+        // normally this returns a damaged item, but if we want it unbreakable + enchantable - just return true instead of using super
+        return true;
     }
 
     @Override
