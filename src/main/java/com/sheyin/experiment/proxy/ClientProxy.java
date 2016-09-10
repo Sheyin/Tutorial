@@ -1,6 +1,7 @@
 package com.sheyin.experiment.proxy;
 
 import com.sheyin.experiment.TutorialMod;
+import com.sheyin.experiment.block.ModBlocks;
 import com.sheyin.experiment.item.ModItems;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -26,15 +27,11 @@ public class ClientProxy extends CommonProxy    {
     @Override
     public void init(FMLInitializationEvent event) {
         ModItems.registerRenders();
+        ModBlocks.registerRenders();
     }
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
     }
 
-    // from shadow's tutorial
-    @Override
-    public void registerItemRenderer(Item item, int meta, String id) {
-        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(TutorialMod.modID + ":" + id, "inventory"));
-    }
 }

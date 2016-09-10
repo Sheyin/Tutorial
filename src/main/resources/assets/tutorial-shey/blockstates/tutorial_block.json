@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "tutorial-shey:tutorial_block"
+    }
+  }
+}

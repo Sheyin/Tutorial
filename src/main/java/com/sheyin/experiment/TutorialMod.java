@@ -6,6 +6,7 @@
 
 package com.sheyin.experiment;
 //import com.sheyin.experiment.item.ModItems;
+import com.sheyin.experiment.block.ModBlocks;
 import com.sheyin.experiment.item.ModItems;
 import com.sheyin.experiment.proxy.CommonProxy;
 import com.sheyin.experiment.tab.CreativeTabTutorial;
@@ -42,6 +43,7 @@ public class TutorialMod {
         // getNextID() autogenerates an ID number to prevent conflicts
         tabTutorial = new CreativeTabTutorial(CreativeTabs.getNextID(), "tab_tutorial");
         ModItems.preInit();
+        ModBlocks.preInit();
         proxy.preInit(event);
         //ModItems.init();
     }
